@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block body %}
+
+<div class="mx-3">
+  <div class="d-grid d-md-flex justify-content-md-start">
+    <!-- Button trigger modal -->
+    
+  </div>
+</div>
+<div class="border border-dark-subtle mx-5 mb-5">
+    <a href="{% url 'viewList'  %}" class="btn my-3 ms-3 btn-outline-primary">Back</a>
+  <form action="" method="POST" class="needs-validation mx-5 mb-3" novalidate id="update_form">
+    <h3 class="mb-2">EDIT PURCHASE (OR # {{purchase.or_number}})</h3>
+    <hr>
+
+    {% csrf_token %} {{form}}
+
+    <button type="submit" class="btn btn-outline-primary">Submit</button>
+  </form>
+</div>
+{% load static %}
+  <script src="{% static '/js/updateform.js' %}"></script>
+{% endblock %}

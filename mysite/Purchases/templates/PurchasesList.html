@@ -1,0 +1,116 @@
+{% extends 'base.html' %} {% block body %}
+
+<div class="mx-3">
+  <div class="d-grid d-md-flex justify-content-md-start">
+    <!-- Button trigger modal -->
+
+    <button
+      type="button"
+      class="btn btn-outline-primary mb-3"
+      data-bs-toggle="modal"
+      data-bs-target="#addPurchase"
+    >
+      <i class="bi bi-plus-circle-fill"></i> Add
+    </button>
+  </div>
+
+
+  
+
+  
+  <table class="mb-2" border="0" cellspacing="5" cellpadding="5">
+    <tbody>
+      <tr>
+        <td>Minimum date:</td>
+        <td><input class="form-control"  type="text" id="min" name="min"></td>
+        <td>  </td>
+        <td>Maximum date:</td>
+        <td><input class="form-control"  type="text" id="max" name="max"></td>
+      </tr>
+
+    </tbody>
+
+  </table>
+   
+ 
+  <table id="purchase_table" class="table table-hover table-bordered ">
+   
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">OR #</th>
+        <th scope="col">Timestamp:</th>
+        <th scope="col">Sold to:</th>
+        <th scope="col">Description:</th>
+        <th scope="col">Total Amount:</th>
+        <th scope="col">Quantity:</th>
+        <th scope="col">Remarks:</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider ">
+      
+      {% for purchase in purchases %}
+      <tr>
+        <th scope="row">{{ purchase.or_number }}</th>
+        <td>{{ purchase.timestamp }}</td>
+        <td>{{ purchase.sold_to }}</td>
+        <td>{{ purchase.description }}</td>
+        <td>Php. {{ purchase.total_amount }}</td>
+        <td>{{ purchase.quantity }}</td>
+        <td>{{ purchase.remarks }}</td>
+        <td class="text-center">
+          <a href="{% url 'update_purchase' purchase.or_number %}" class="btn btn-outline-primary me-md-2" type="button">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+        </td>
+        <td class="text-center">
+          <a href="{% url 'delete_purchase' purchase.or_number %}" class="btn btn-outline-danger" type="button">
+            <i class="bi bi-trash3"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+</div>
+<!-- Modal -->
+<div class="modal fade " id="addPurchase"  tabindex="-1"  aria-labelledby="addPurchaseLabel" aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false" >
+  <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addPurchaseLabel">Add Purchase</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form action="" method='POST' class="needs-validation" novalidate id="myForm">
+      <div class="modal-body">
+        
+        
+       {% csrf_token %}
+       {{ form }}
+          
+        
+       
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</div>
+{% load static %}
+  <script src="{% static '/js/formValid.js' %}"></script>
+{% endblock %}
